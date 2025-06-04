@@ -125,37 +125,48 @@ Si el sistema comienza a generar respuestas poco precisas, genéricas o irreleva
 * Realizar fine-tuning de un modelo propio si el dominio lo justifica (por ejemplo, entrenamiento adicional con ejemplos de entrevistas del negocio).
 * Ajustar el top-k dinámicamente en función de la longitud de la pregunta o el tema.
 
+---
+
 ### 2. Introducción de una nueva política de respuesta (por ejemplo: no mencionar temas sensibles)
 
-Cuando es necesario introducir una política nueva (por ejemplo, evitar respuestas que mencionen temas sensibles como religión, salud personal, etc.), esta debe implementarse de forma transparente para el usuario final. Las siguientes estrategias están alineadas con prácticas actuales del mercado:
+Cuando es necesario introducir una política nueva (por ejemplo, evitar respuestas que mencionen temas sensibles como religión, salud personal, política, etc.), esta debe implementarse de forma **segura, gradual y sin afectar la experiencia del usuario final**. A continuación se detallan las estrategias recomendadas, alineadas con las mejores prácticas actuales:
 
 **Estrategia de implementación no disruptiva:**
 
-* **Inyección de instrucciones en el prompt:**
+* **Instrucciones inyectadas en el prompt del modelo:**
 
-  * Incorporar políticas directamente en el prompt de sistema enviado al modelo.
-  * Ejemplo: “Responde con base en los documentos seleccionados, evitando mencionar temas relacionados con salud, religión o política a menos que sea estrictamente relevante y esté contenido explícitamente en los documentos.”
+  * Se agregan instrucciones claras sobre los temas prohibidos o restringidos al momento de construir el prompt para el modelo de lenguaje.
+  * Ejemplo: “Evita responder sobre temas sensibles como salud, religión o política, a menos que estén explícitamente cubiertos en los documentos y sean requeridos por el contexto.”
 
-* **Uso de content filters o moderation layers:**
+* **Moderación en capa intermedia (post-procesamiento):**
 
-  * Implementar una capa de moderación posterior (post-processing) que detecte y bloquee respuestas que violen políticas mediante clasificadores ligeros o reglas.
-  * Herramientas como OpenAI’s content filter, Google’s safety settings, o clasificadores custom (zero-shot o few-shot) pueden integrarse sin alterar la experiencia.
+  * Se introduce un módulo que analiza las respuestas generadas antes de enviarlas al usuario, bloqueando o reformulando aquellas que violen las políticas establecidas.
+  * Se pueden usar clasificadores ligeros (zero-shot o few-shot), filtros semánticos o herramientas de proveedores como OpenAI, Vertex AI o moderadores propios.
 
-* **Refuerzo mediante recuperación filtrada:**
+* **Filtrado anticipado en recuperación:**
 
-  * Excluir fragmentos que contengan información sensible durante la fase de recuperación.
-  * Esto se logra mediante metadatos temáticos o etiquetas asignadas en el momento de la indexación (por ejemplo, `tema: salud` → excluido si está en blacklist activa).
+  * Se etiquetan los fragmentos de documentos con metadatos temáticos durante el proceso de indexación.
+  * Se excluyen de la recuperación aquellos fragmentos que correspondan a temas sensibles, si así lo establece la política activa.
 
-* **Validación y testeo en entorno sombra:**
+**Estrategias para el despliegue seguro de estos cambios:**
 
-  * Antes de aplicar en producción, validar las nuevas políticas usando un entorno de "shadow deployment" para comparar la salida del modelo con y sin política.
-  * Esto permite medir impacto, identificar excepciones y ajustar sin interrupciones.
+* **Shadow deployment:**
 
-**Ventajas de este enfoque:**
+  * Se ejecuta el nuevo flujo de generación (con las políticas aplicadas) en paralelo al actual.
+  * Las respuestas generadas no se muestran al usuario, pero se registran para análisis interno y comparación con las actuales.
+  * Permite evaluar la efectividad de las nuevas reglas sin impacto en producción.
 
-* No requiere detener el servicio ni cambiar el modelo base.
-* Permite actualizar políticas rápidamente.
-* Escalable a múltiples idiomas, dominios o niveles de sensibilidad.
-* Transparente para el usuario final mientras refuerza el cumplimiento normativo.
+* **Canary release:**
+
+  * La nueva política se habilita inicialmente solo para un subconjunto controlado de usuarios reales.
+  * Se observa su comportamiento en condiciones reales y se valida que la experiencia no se degrade ni se introduzcan errores.
+  * En función de los resultados, se amplía gradualmente su disponibilidad al resto de los usuarios.
+
+**Beneficios de este enfoque combinado:**
+
+* Permite validar cambios complejos sin riesgos.
+* Minimiza el impacto negativo en usuarios finales.
+* Facilita la toma de decisiones basada en métricas reales (tasa de error, calidad percibida, tasa de rechazo).
+* Aumenta la confianza en la robustez del sistema ante nuevas reglas o requisitos regulatorios.
 
 ---
