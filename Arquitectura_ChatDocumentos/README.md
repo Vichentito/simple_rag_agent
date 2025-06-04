@@ -77,3 +77,9 @@ El sistema puede desplegarse en:
 * **GCP**: usando Cloud Storage, Vertex AI para el modelo y AlloyDB con pgvector para embeddings.
 
 La arquitectura es modular y puede adaptarse a diferentes proveedores o infraestructuras locales según los requisitos de la organización.
+
+## Consideraciones adicionales
+
+* **Uso de GraphRAG:** En casos donde el volumen de documentos aumente considerablemente, o si los documentos presentan una estructura temática compleja (por ejemplo, múltiples relaciones entre conceptos, tópicos recurrentes o secuencias temporales), se considerará el uso de enfoques tipo **GraphRAG**. Esta variante del paradigma RAG construye un grafo de conocimiento entre fragmentos y conceptos, permitiendo una recuperación más estructurada y explicativa. Puede implementarse como complemento o sustituto parcial de la base vectorial, dependiendo del análisis de rendimiento y calidad de respuestas en pruebas reales.
+
+* **Técnicas de Chunking:** Por defecto se utilizará una estrategia de **chunking semántico**, que divide el texto en fragmentos coherentes en función del contenido (por ejemplo, por secciones o tópicos). Sin embargo, durante la fase de pruebas también se evaluarán otras estrategias como chunking por longitud fija, sliding window o chunking híbrido. El objetivo será encontrar el balance óptimo entre precisión en la recuperación, desempeño y costo de procesamiento.
