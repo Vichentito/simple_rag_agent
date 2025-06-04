@@ -1,0 +1,49 @@
+# ─── PYTHON / BACKEND ────────────────────────────────────────────────────────
+venv/
+*.env
+**/.env
+__pycache__/
+*.pyc
+chat/api/chroma_store/
+
+# ─── NODE / FRONTEND ─────────────────────────────────────────────────────────
+# dependencies
+chat/frontend/node_modules/
+chat/frontend/.pnp
+chat/frontend/.pnp.*
+chat/frontend/.yarn/*
+!chat/frontend/.yarn/patches
+!chat/frontend/.yarn/plugins
+!chat/frontend/.yarn/releases
+!chat/frontend/.yarn/versions
+
+# testing
+chat/frontend/coverage
+
+# next.js
+chat/frontend/.next/
+chat/frontend/out/
+
+# production
+chat/frontend/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+chat/frontend/.env*
+chat/frontend/.env.local
+
+# vercel
+chat/frontend/.vercel
+
+# typescript
+*.tsbuildinfo
+chat/frontend/next-env.d.ts
