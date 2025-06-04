@@ -155,12 +155,16 @@ Cuando es necesario introducir una política nueva (por ejemplo, evitar respuest
   * Se ejecuta el nuevo flujo de generación (con las políticas aplicadas) en paralelo al actual.
   * Las respuestas generadas no se muestran al usuario, pero se registran para análisis interno y comparación con las actuales.
   * Permite evaluar la efectividad de las nuevas reglas sin impacto en producción.
+ 
+ ![Captura de pantalla 2025-06-04 011814](https://github.com/user-attachments/assets/2ea671eb-5274-48ef-ab90-bbf240bd2702)
 
 * **Canary release:**
 
   * La nueva política se habilita inicialmente solo para un subconjunto controlado de usuarios reales.
   * Se observa su comportamiento en condiciones reales y se valida que la experiencia no se degrade ni se introduzcan errores.
   * En función de los resultados, se amplía gradualmente su disponibilidad al resto de los usuarios.
+
+ ![Captura de pantalla 2025-06-04 011835](https://github.com/user-attachments/assets/1a651f1f-10b5-4f82-994c-78b2f6acf31e)
 
 **Beneficios de este enfoque combinado:**
 
