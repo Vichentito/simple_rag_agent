@@ -44,7 +44,7 @@ El flujo de procesamiento comienza cuando un usuario carga un nuevo documento. A
 * Generación de embeddings de cada fragmento.
 * Almacenamiento de los vectores junto con metadatos (por ejemplo, ID del documento, título, fecha).
 
-**\[Insertar Diagrama de Carga e Indexación]**
+![procesado_data](https://github.com/user-attachments/assets/9e60a1b8-903b-4a62-a60d-25b24ca13077)
 
 ## Flujo de Consulta y Generación
 
@@ -57,7 +57,7 @@ El flujo de consulta ocurre cuando el usuario desea hacer preguntas sobre los do
 * Llamada al modelo de lenguaje para generar la respuesta.
 * Envío de la respuesta al frontend.
 
-**\[Insertar Diagrama de Chat y Recuperación de Información]**
+![chat_data](https://github.com/user-attachments/assets/83166e0c-4074-405f-94b0-59af64276475)
 
 ## Seguridad y Privacidad
 
