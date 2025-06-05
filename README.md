@@ -27,7 +27,7 @@ simple\_rag\_agent/
 │   │   ├── main.py          ← API con FastAPI
 │   │   ├── processor.py     ← Procesador de feedback y embeddings
 │   │   └── base.csv         ← Fuente de datos
-│   └── frontend/            ← (Pendiente) Interfaz web
+│   └── frontend/            ← Interfaz web (Next.js + Tailwind)
 │
 ├── .env                     ← Clave de API de OpenAI
 └── README.md
@@ -39,11 +39,12 @@ simple\_rag\_agent/
 ## ⚙️ Requisitos
 
 - Python 3.13 o superior
+- Node.js 18 o superior
 - Cuenta de OpenAI con clave de API
 
 ---
 
-## 📦 Instalación
+## 📦 Instalación del backend (API)
 
 1. **Clona el repositorio**
 
@@ -125,20 +126,30 @@ http://localhost:3000
 
 ---
 
-## 🖥️ Frontend
+## 🖥️ Frontend (Next.js)
 
-Se planea agregar una interfaz web con Vue o React para realizar preguntas al agente de forma visual. Por ahora, puedes usar herramientas como [Hoppscotch](https://hoppscotch.io/) o Postman para probar la API.
+### 🚧 Requisitos
 
----
+* Node.js 20+
+* npm o yarn
 
-## 📌 TODO
+### 📦 Instalación y ejecución
 
-* [ ] Interfaz web en `chat/frontend/`
-* [ ] Panel para ver sucursales y temas frecuentes
-* [ ] Almacenamiento en la nube para evitar regenerar embeddings
+```bash
+cd chat/frontend
+npm install
+npm run dev
+```
 
----
+Esto iniciará la interfaz web en:
+
+```
+http://localhost:3000
+```
+
+(Recuerda que el frontend debe estar configurado para apuntar a la URL de tu API: por defecto, `http://localhost:5000/chat`).
+
 
 ## 📄 Licencia
 
-MIT - Hecho con ❤️ por [Vichentito](https://github.com/Vichentito)
+MIT - Hecho con por [Vichentito](https://github.com/Vichentito)
